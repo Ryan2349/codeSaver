@@ -1,0 +1,977 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(145deg, #f7f3e8 0%, #f0e9da 100%);
+    font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    margin: 0;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
+    max-height: 850px;
+    background: rgba(255, 250, 245, 0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 2.5rem;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(210, 180, 140, 0.3);
+}
+
+.header {
+    padding: 1.2rem 2rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e6d7bd;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #5e4632;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo .edit-btn,
+.logo .delete-btn {
+    font-size: 0.85rem;
+    padding: 0.35rem 1rem;
+    margin-left: 0.2rem;
+    border-radius: 2rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.logo .edit-btn:hover {
+    background: #cdb393;
+    color: white;
+    border-color: #b39264;
+}
+
+.logo .delete-btn:hover {
+    background: #d68b6b;
+    color: white;
+    border-color: #b3644b;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.back-btn,
+.import-btn,
+.export-json-btn {
+    background: none;
+    border: 1.5px solid #b39264;
+    color: #5e4632;
+    padding: 0.5rem 1.4rem;
+    border-radius: 2.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 245, 235, 0.7);
+    backdrop-filter: blur(5px);
+    white-space: nowrap;
+}
+
+.back-btn:hover,
+.import-btn:hover,
+.export-json-btn:hover {
+    background: #b39264;
+    color: #fff8f0;
+    border-color: #b39264;
+}
+
+.back-btn.hidden {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.main-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0 1.8rem 1.8rem;
+}
+
+.topic-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+    overflow-y: auto;
+    padding: 0.3rem 0.2rem 1rem;
+    align-content: flex-start;
+    flex: 1;
+}
+
+.topic-card {
+    background: #fffbf5;
+    border-radius: 1.8rem;
+    padding: 1.5rem 1.2rem;
+    box-shadow: 0 12px 22px rgba(150, 120, 70, 0.1);
+    border: 1px solid #eedcc8;
+    flex: 1 1 200px;
+    min-width: 160px;
+    max-width: 240px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    backdrop-filter: blur(4px);
+}
+
+.topic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 30px rgba(140, 100, 50, 0.18);
+    border-color: #c9a87b;
+}
+
+.topic-icon {
+    font-size: 2.3rem;
+    background: #f3e5d2;
+    border-radius: 1.2rem;
+    padding: 0.7rem;
+    color: #7b5e3b;
+}
+
+.topic-name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #3f2e1d;
+    word-break: break-word;
+}
+
+.topic-count {
+    font-size: 0.85rem;
+    color: #8b7355;
+    background: #efe2d0;
+    padding: 0.2rem 0.9rem;
+    border-radius: 1rem;
+    align-self: flex-start;
+}
+
+.form-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.input-field {
+    flex: 2;
+    min-width: 180px;
+    padding: 0.9rem 1.2rem;
+    border: 1.5px solid #ddccb0;
+    border-radius: 2.5rem;
+    font-size: 1rem;
+    background: #fffdf9;
+    outline: none;
+    transition: 0.2s;
+    color: #3b2e1f;
+}
+
+.input-field:focus {
+    border-color: #b39264;
+    box-shadow: 0 0 0 3px rgba(179, 146, 100, 0.2);
+}
+
+.btn {
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.9rem 1.8rem;
+    border-radius: 2.5rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    background: #b39264;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    border: 1px solid #a47e51;
+}
+
+.btn:hover {
+    background: #9e7a50;
+}
+
+.btn-outline {
+    border: 1.5px solid #b39264;
+    color: #5e4632;
+    background: rgba(255, 250, 240, 0.7);
+}
+
+.btn-outline:hover {
+    background: #b39264;
+    color: white;
+}
+
+.copy-btn,
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn {
+    background: #e7dacb;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4b3822;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.copy-btn:hover,
+.edit-btn:hover {
+    background: #cdb393;
+    color: white;
+}
+
+.delete-btn {
+    background: #f0e0ce;
+    color: #8b5a3c;
+}
+
+.delete-btn:hover {
+    background: #d68b6b;
+    color: white;
+}
+
+.save-btn {
+    background: #b39264;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #9e7a50;
+}
+
+.cancel-btn {
+    background: #e0cfb5;
+    color: #5e4632;
+}
+
+.cancel-btn:hover {
+    background: #c8b28b;
+}
+
+.project-container {
+    display: flex;
+    flex: 1;
+    gap: 1rem;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.file-sidebar {
+    width: 240px;
+    min-width: 200px;
+    background: #fdfaf3;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border: 1px solid #e6d7bd;
+    overflow-y: auto;
+    position: relative;
+    transition: background 0.2s, border 0.2s, box-shadow 0.2s;
+}
+
+/* ===== 拖曳匯入視覺反饋 ===== */
+.file-sidebar.drop-zone-active {
+    background: #f3e8d7;
+    border: 2px dashed #b39264;
+    box-shadow: inset 0 0 20px rgba(179, 146, 100, 0.2);
+}
+
+.file-sidebar.drop-zone-active::after {
+    content: "📥 釋放以匯入檔案";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #5e4632;
+    background: rgba(255, 251, 245, 0.95);
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid #e6d7bd;
+    white-space: nowrap;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: #8b7355;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0;
+}
+
+.breadcrumb span {
+    cursor: pointer;
+    color: #5e4632;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: all 0.2s;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.5rem;
+}
+
+.breadcrumb span:hover {
+    color: #b39264;
+    background: rgba(179, 146, 100, 0.1);
+}
+
+.breadcrumb .separator {
+    color: #8b7355;
+    text-decoration: none;
+    cursor: default;
+}
+
+.file-item {
+    padding: 0.6rem 0.8rem;
+    background: #fffbf5;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: #5e4632;
+    border: 1px solid #e6d7bd;
+    transition: 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    word-break: break-word;
+    user-select: none;
+}
+
+.file-item.dragging {
+    opacity: 0.4;
+    border-style: dashed;
+}
+
+.folder-item {
+    padding: 0.6rem 0.8rem;
+    background: #faf5ed;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #5e4632;
+    border: 1px solid #e6d7bd;
+    transition: 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    word-break: break-word;
+}
+
+.folder-item.drop-target,
+.breadcrumb span.drop-target {
+    background: #d9c6a5;
+    border-color: #b39264;
+    box-shadow: 0 0 0 2px rgba(179, 146, 100, 0.3);
+    transform: scale(1.02);
+}
+
+.file-item:hover,
+.folder-item:hover {
+    background: #f3e8d7;
+}
+
+.file-item.active {
+    background: #e7d6bd;
+    border-color: #b39264;
+    font-weight: 700;
+}
+
+.folder-item.reused-file-folder,
+.file-item.reused-file-item {
+    background: #e6f4e2;
+    border-color: #b8d8ae;
+}
+
+.folder-item.reused-file-folder:hover,
+.file-item.reused-file-item:hover,
+.file-item.reused-file-item.active {
+    background: #d9edd3;
+    border-color: #9fc995;
+}
+
+.folder-item.reused-file-folder.drop-target {
+    background: #d9c6a5;
+    border-color: #b39264;
+}
+
+.file-item .actions,
+.folder-item .actions {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+.file-delete-btn,
+.folder-delete-btn {
+    background: none;
+    border: none;
+    color: #b39264;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.5rem;
+}
+
+.file-delete-btn:hover,
+.folder-delete-btn:hover {
+    background: #d68b6b;
+    color: white;
+}
+
+.code-editor-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 300px;
+}
+
+.code-editor-wrapper {
+    display: flex;
+    flex: 1;
+    border: 1.5px solid #ddccb0;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    background: #fffef9;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.code-editor-wrapper:focus-within {
+    border-color: #b39264;
+    box-shadow: 0 0 0 3px rgba(179, 146, 100, 0.2);
+}
+
+.line-numbers {
+    padding: 1rem 0.5rem 1rem 0.8rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b1977a;
+    background: #faf6ef;
+    user-select: none;
+    text-align: right;
+    min-width: 3ch;
+    overflow-y: hidden;
+    border-right: 1px solid #e6d7bd;
+    white-space: pre;
+}
+
+.code-textarea {
+    flex: 1;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border: none;
+    background: transparent;
+    resize: none;
+    outline: none;
+    color: #3b2e1f;
+    tab-size: 2;
+    overflow-y: auto;
+    white-space: pre;
+    border-radius: 0 1.2rem 1.2rem 0;
+}
+
+.code-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.empty-message {
+    color: #b1977a;
+    font-style: italic;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4b3822;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    z-index: 3000;
+    animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* ===== 版本歷史 Sidebar ===== */
+.version-sidebar {
+    width: 260px;
+    min-width: 220px;
+    background: #fdfaf3;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    border: 1px solid #e6d7bd;
+    overflow-y: auto;
+    transition: width 0.3s, min-width 0.3s, padding 0.3s, opacity 0.3s;
+}
+
+.version-sidebar.collapsed {
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    border: none;
+}
+
+.version-sidebar-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #5e4632;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e6d7bd;
+}
+
+.version-item {
+    background: #fffbf5;
+    border: 1px solid #eedcc8;
+    border-radius: 1rem;
+    padding: 0.7rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.version-item:hover {
+    background: #f3e8d7;
+    border-color: #c9a87b;
+}
+
+.version-item.active-version {
+    background: #e7d6bd;
+    border-color: #b39264;
+}
+
+.version-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.version-item-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #3f2e1d;
+}
+
+.version-item-date {
+    font-size: 0.75rem;
+    color: #8b7355;
+}
+
+.version-item-actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+}
+
+.version-item-actions button {
+    background: #e7dacb;
+    border: none;
+    padding: 0.25rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #4b3822;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.version-item-actions button:hover {
+    background: #cdb393;
+    color: white;
+}
+
+.version-item-actions button.version-delete-btn:hover {
+    background: #d68b6b;
+    color: white;
+}
+
+.version-toggle-btn {
+    background: none;
+    border: 1.5px solid #b39264;
+    color: #5e4632;
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.version-toggle-btn:hover {
+    background: #b39264;
+    color: #fff8f0;
+}
+
+.version-empty {
+    color: #b1977a;
+    font-style: italic;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 1rem 0.5rem;
+}
+
+/* ===== 匯入選擇 Modal ===== */
+.import-choice-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.import-choice-box {
+    background: #fffbf5;
+    border-radius: 1.8rem;
+    padding: 2rem;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid #eedcc8;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.import-choice-box h3 {
+    color: #5e4632;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.import-choice-box p {
+    color: #8b7355;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.import-choice-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.import-choice-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1.5px solid #e6d7bd;
+    border-radius: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fffef9;
+}
+
+.import-choice-option:hover {
+    border-color: #b39264;
+    background: #f9f0e3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(150, 120, 70, 0.12);
+}
+
+.import-choice-option .option-icon {
+    font-size: 1.8rem;
+}
+
+.import-choice-option .option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.import-choice-option .option-title {
+    font-weight: 700;
+    color: #3f2e1d;
+    font-size: 1rem;
+}
+
+.import-choice-option .option-desc {
+    font-size: 0.8rem;
+    color: #8b7355;
+}
+
+.import-choice-cancel {
+    background: none;
+    border: none;
+    color: #8b7355;
+    cursor: pointer;
+    font-size: 0.9rem;
+    align-self: center;
+    padding: 0.4rem 1.2rem;
+    border-radius: 1rem;
+    transition: background 0.2s;
+}
+
+.import-choice-cancel:hover {
+    background: rgba(179, 146, 100, 0.12);
+}
+
+/* ===== 選擇專案 Modal ===== */
+.select-project-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.select-project-box {
+    background: #fffbf5;
+    border-radius: 1.8rem;
+    padding: 2rem;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eedcc8;
+}
+
+.select-project-box h3 {
+    color: #5e4632;
+    margin: 0 0 0.5rem 0;
+}
+
+.select-project-box p {
+    color: #8b7355;
+    font-size: 0.9rem;
+    margin: 0 0 1rem 0;
+}
+
+.select-project-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    max-height: 350px;
+}
+
+.select-project-item {
+    padding: 0.8rem 1rem;
+    background: #fffef9;
+    border: 1.5px solid #e6d7bd;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.select-project-item:hover {
+    border-color: #b39264;
+    background: #f9f0e3;
+}
+
+.select-project-item.selected {
+    border-color: #b39264;
+    background: #e7d6bd;
+    font-weight: 700;
+}
+
+.select-project-item .proj-icon {
+    font-size: 1.3rem;
+}
+
+.select-project-item .proj-name {
+    font-weight: 600;
+    color: #3f2e1d;
+    flex: 1;
+}
+
+.select-project-item .proj-count {
+    font-size: 0.75rem;
+    color: #8b7355;
+    background: #efe2d0;
+    padding: 0.15rem 0.6rem;
+    border-radius: 0.8rem;
+}
+
+.select-project-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+@media (max-width: 700px) {
+    .project-container {
+        flex-direction: column;
+    }
+    .file-sidebar {
+        width: 100%;
+        min-width: auto;
+        max-height: 200px;
+        flex-shrink: 0;
+    }
+    .version-sidebar {
+        width: 100%;
+        min-width: auto;
+        max-height: 180px;
+    }
+    .version-sidebar.collapsed {
+        max-height: 0;
+    }
+    /* ===== 版本歷史 - 當前版本深色高亮 ===== */
+    .version-item.version-current {
+        background: #3b2a1a;
+        border: 1px solid #6b5238;
+        border-radius: 0.8rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+    
+    .version-item.version-current .version-item-label {
+        color: #f5e6d3;
+        font-weight: 600;
+    }
+    
+    .version-item.version-current .version-item-date {
+        color: #c4a882;
+    }
+    
+    .version-item.version-current .version-item-actions button {
+        color: #f0dcc5;
+        border-color: #7a6248;
+        background: rgba(255, 255, 255, 0.06);
+    }
+    
+    .version-item.version-current .version-item-actions button:hover {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: #a08060;
+    }
+    
+    .version-item.version-current .version-delete-btn {
+        color: #e8a0a0;
+        border-color: #8b5050;
+    }
+    
+    .version-item.version-current .version-delete-btn:hover {
+        background: rgba(200, 80, 80, 0.2);
+    }
+    
+    .version-current-badge {
+        display: inline-block;
+        font-size: 0.65rem;
+        background: #b39264;
+        color: #fff;
+        padding: 0.1rem 0.45rem;
+        border-radius: 0.5rem;
+        margin-left: 0.4rem;
+        vertical-align: middle;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+}
